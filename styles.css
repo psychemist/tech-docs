@@ -1,0 +1,15 @@
+main: {
+    max-width
+}
+
+header {
+    font-weight: 700;
+}
+
+li p {
+    margin: 0;
+}
+
+.none ul {
+    list-style-type: none;
+}

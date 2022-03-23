@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>fCC Technical Documentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <main id="main-doc">
+        <nav id="navbar">
+            <header>
+                <h1>Git Documentation</h1>
+            </header>
+
+            <a href="#Introduction_to_Version_Control" class="nav-link">Introduction to Version Control</a>
+            <a href="#What_is_Git?" class="nav-link">What is Git?</a>
+            <a href="#Properties_of_Git" class="nav-link">Properties of Git</a>
+            <a href="#The_Three_States" class="nav-link">The Three States</a>
+            <a href="#Getting_a_Git_Repository" class="nav-link">Getting a Git Repository</a>
+            <a href="#Checking_the_Status_of_Your_Files" class="nav-link">Checking the Status of Your Files</a>
+            <a href="#Tracking_New_Files" class="nav-link">Tracking New Files</a>
+            <a href="#Staging_Modified_Files" class="nav-link">Staging Modified Files</a>
+            <a href="#Committing_Your_Changes" class="nav-link">Committing Your Changes</a>
+            <a href="#Creating_Branches" class="nav-link">Creating Branches</a>
+            <a href="#Switching_Between_Branches" class="nav-link">Switching Between Branches</a>
+            <a href="#Adding_Remote_Respositories" class="nav-link">Adding Remote Respositories</a>
+            <a href="#Fetching_and_Pulling_from_Remotes" class="nav-link">Fetching and Pulling from Remotes</a>
+            <a href="#Pushing_to_Your_Remotes" class="nav-link">Pushing to Your Remotes</a>
+            <a href="#Basic_Merging" class="nav-link">Basic Merging</a>
+            <a href="#Reference" class="nav-link">Reference</a>
+        </nav>
+
+
+        <section class="main-section" id="Introduction_to_Version_Control">
+            <header>Introduction to Version Control</header>
+            <article>
+                <p>Version control is a system that records changes to a file or set of files over time so that you can
+                    recall specific versions later. It allows you to revert selected files back to a previous state,
+                    revert the entire project back to a previous state, compare changes over time, see who last modified
+                    something that might be causing a problem, who introduced an issue and when, and more.
+                </p>
+
+                <p>There are three main types of version control systems (VCS):</p>
+                <ol>
+                    <li>Local Version Control Systems:
+                        The simplest and commonest method of version control entails copying files into another
+                        directory, preferably a time-stamped one. However this is incredibly error-prone as it is easy
+                        to forget which directory you are in and accidentally write to the wrong file or copy over files
+                        you do not mean to. To deal with this issue, programmers long ago developed local VCSs that had
+                        a simple database that kept all the changes to files under revision control.
+                    </li>
+                    <li>Centralized Version Control Systems:
+                        These systems have a single server that contains all the versioned files and a number of clients
+                        that check out files from that central place. This setup offers many advantages over local VCSs
+                        including collaboration and transparency. Administrators also have more control over permissions
+                        and it is far easier to administer a CVCS than it is to deal with local databases on every
+                        client. The most obvious downside to this setup is the single point of failure that centralized
+                        databases represent.
+                    </li>
+                    <li>Distributed Version Control Systems:
+                        In a DVCS, clients don't just check out the latest snapshot of files; rather they fully mirror
+                        the repository, including its full history. Thus, if any server dies, and these systems were
+                        collaborating via that server, any of the client repositories can be copied back up to the
+                        server to restore it as every clone is really a full backup of all the data.
+                        Furthermore, many of these systems deal pretty well with having several remote repositories they
+                        can work with, so you can collaborate with different groups of people in different ways
+                        simultaneously within the same project.
+                    </li>
+                </ol>
+            </article>
+
+        </section>
+        <section class="main-section" id="What_is_Git?">
+            <header>What is Git?</header>
+            <article>
+                <p> Git is a free and open source distributed version control system originally developed in 2005 by
+                    Linus Torvalds, the famous creator of the Linux operating system kernel. Since its birth, Git has
+                    evolved and matured to be fast, easy to use, very efficient with large projects, and with an
+                    incredible branching system for non-linear development (thousands of parallel branches).
+                </p>
+
+                <p>The major difference between Git and any other VCS is the way Git thinks about its data.
+                    Conceptually, most other systems store information as a list of file-based changes. These other
+                    systems think of the information they store as a set of files and the changes made to each file over
+                    time (this is commonly described as delta-based version control).
+                    Git does not think of or store its data this way. Instead, Git thinks of its data more like a series
+                    of snapshots of a miniature filesystem. With Git, every time you commit, or save the state of your
+                    project, Git basically takes a picture of what all your files look like at that moment and stores a
+                    reference to that snapshot. To be efficient, if files have not changed, Git does not store the file
+                    again, just a link to the previous identical file it has already stored. Git thinks about its data
+                    more like a stream of snapshots. This makes Git more like a mini filesystem with some incredibly
+                    powerful tools built on top of it, rather than simply a VCS.
+                </p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Properties_of_Git">
+            <header>Properties of Git</header>
+            <article>
+                <p>Git has some special features which make it seem blessed with ungodly powers. These include:</p>
+
+                <ul>
+                    <li>
+                        <p>Git Has Integrity:
+                            Everything in Git is checksummed before it is stored and is then referred to by that
+                            checksum. This means it is impossible to change the contents of any file or directory
+                            without Git knowing about it. This functionality is built into Git at the lowest levels and
+                            is integral to its philosophy. You cannot lose information in transit or get file corruption
+                            without Git being able to detect it.
+                            The mechanism that Git uses for this checksumming is called a
+                            <a href="https://en.wikipedia.org/wiki/SHA-1"> "SHA-1 hash"</a>. This is a 40-character
+                            string composed of hexadecimal characters (0–9 and a–f) and calculated based on the contents
+                            of a file or directory structure in Git. A SHA-1 hash looks something like this:
+                        </p>
+                        <pre>24b9da6552252987aa493b52f8696cd6d3b00373</pre>
+                        <p>You will see these hash values all over the place in Git because it uses them so much. In
+                            fact, Git stores everything in its database not by file name but by the hash value of its
+                            contents.
+                        </p>
+                    </li>
+
+                    <li>Git Generally Only Adds Data:
+                        When you do actions in Git, nearly all of them only add data to the Git database. It is hard to
+                        get the system to do anything that is not undoable or to make it erase data in any way. As with
+                        any VCS, you can lose or mess up changes you have not committed yet, but after you commit a
+                        snapshot into Git, it is very difficult to lose, especially if you regularly push your database
+                        to another repository. This makes using Git a joy because we know we can experiment without the
+                        danger of severely screwing things up.
+                    </li>
+
+                    <li>Nearly Every Operation Is Local:
+                        Most operations in Git need only local files and resources to operate — generally no information
+                        is needed from another computer on your network. Because you have the entire history of the
+                        project right there on your local disk, most operations seem almost instantaneous.
+                        This means you see the project history almost instantly. This also means that there is very
+                        little you cannot do if you are offline or off VPN.
+                    </li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="main-section" id="The_Three_States">
+            <header>The Three States</header>
+            <article class="none">
+                <p>Git has three main states that your files can reside in: modified, staged, and committed:</p>
+                <ul>
+                    <li> Modified means that you have changed the file but have not committed it to your database yet.
+                    </li>
+                    <li>Staged means that you have marked a modified file in its current version to go into your next
+                        commit snapshot.</li>
+                    <li>Committed means that the data is safely stored in your local database.</li>
+                </ul>
+
+                <p> This leads us to the three main sections of a Git project: the working tree, the staging area, and
+                    the Git directory.</p>
+                <ul>
+                    <li> The working tree is a single checkout of one version of the project. These files are pulled out
+                        of the compressed database in the Git directory and placed on disk for you to use or modify.
+                    </li>
+                    <li>The staging area is a file, generally contained in your Git directory, that stores information
+                        about what will go into your next commit. Its technical name in Git parlance is the “index”,
+                        but the phrase “staging area” works just as well.</li>
+                    <li>The Git directory is where Git stores the metadata and object database for your project. This is
+                        the most important part of Git, and it is what is copied when you clone a repository from
+                        another computer.</li>
+                </ul>
+
+                <p>The basic Git workflow goes something like this:</p>
+                <ul>
+                    <li>You modify files in your working tree.</li>
+                    <li>You selectively stage just those changes you want to be part of your next commit, which adds
+                        only those changes to the staging area.</li>
+                    <li>You do a commit, which takes the files as they are in the staging area and stores that snapshot
+                        permanently to your Git directory.</li>
+                </ul>
+                <p>If a particular version of a file is in the Git directory, it is considered committed. If it has
+                    been modified and was added to the staging area, it is staged. And if it was changed since it
+                    was checked out but has not been staged, it is modified.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Getting_a_Git_Repository">
+            <header>Getting a Git Repository</header>
+            <article>
+                <p>You typically obtain a Git repository in one of two ways:</p>
+                <ol>
+                    <li>Initializing a Repository in an Existing Directory:
+                        If you have a project directory that is currently not under version control and you want to
+                        start controlling it with Git, you first need to go to that project’s directory in the command
+                        line and type:
+
+                        <pre>$ git init</pre>
+
+                        This creates a new subdirectory named <code>.git</code> that contains all of your necessary
+                        repository files — a Git repository skeleton. At this point, nothing in your project is tracked
+                        yet.
+                    </li>
+                    <li>Cloning an Existing Repository:
+                        If you want to get a copy of an existing Git repository — for example, a project you would like
+                        to contribute to — the command you need is <code>git clone</code>. Every version of every file
+                        for the history of the project is pulled down by default when you run this command.
+                        You clone a repository with <code>git clone (url) </code> . For example, if you want to clone
+                        the Git linkable library called <code>libgit2</code>, you can do so like this:
+
+                        <pre>$ git clone https://github.com/libgit2/libgit2</pre>
+
+                        That creates a directory named <code>libgit2</code>, initializes a <code>.git</code> directory
+                        inside it, pulls down all the data for that repository, and checks out a working copy of the
+                        latest version. If you go into the new <code>libgit2</code> directory that was just created,
+                        you will see the project files in there, ready to be worked on or used.
+                        If you want to clone the repository into a directory named something other than
+                        <code>libgit2</code>, you can specify the new directory name as an additional argument:
+
+                        <pre>$ git clone https://github.com/libgit2/libgit2 mylibgit</pre>
+
+                        That command does the same thing as the previous one, but the target directory is called
+                        <code>mylibgit</code>.
+                        Git has a number of different transfer protocols you can use. The previous example uses the
+                        <code>https:// protocol</code>, but you may also see <code>git://</code> or
+                        <code>user@server:path/to/repo.git</code>, which uses the SSH transfer protocol.
+                    </li>
+                </ol>
+            </article>
+        </section>
+
+        <section class="main-section" id="Checking_the_Status_of_Your_Files">
+            <header>Checking the Status of Your Files</header>
+            <article>
+                <p>The main tool you use to determine which files are in which state is the <code>git status</code>
+                    command. If you run this command directly after a clone, you should see something like this:</p>
+
+                <pre>
+                <code>$ git status
+                On branch main
+                Your branch is up-to-date with 'origin/main'.
+                nothing to commit, working tree clean</code>
+                </pre>
+
+                <p>This means you have a clean working directory; in other words, none of your tracked files are
+                    modified. Git also does not see any untracked files, or they would be listed here. Finally,
+                    the command tells you which branch you are on and informs you that it has not diverged from the same
+                    branch on the server.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Tracking_New_Files">
+            <header>Tracking New Files</header>
+            <article>
+                <p>In order to begin tracking a new file, you use the command <code>git add</code>. To begin tracking
+                    the README file, you can run this:</p>
+                <pre>$ git add README</pre>
+                <p>If you run your status command again, you can see that your README file is now tracked and staged to
+                    be committed:</p>
+
+                <pre>
+                <code>$ git status
+                On branch main
+                Your branch is up-to-date with 'origin/main'.
+                Changes to be committed:
+                  (use "git restore --staged /file/..." to unstage)
+                    new file: README</code>
+                </pre>
+
+                <p>You can tell that it is staged because it is under the “Changes to be committed” heading. If you
+                    commit at this point, the version of the file at the time you ran <code>git add</code> is what will
+                    be in the subsequent historical snapshot. The <code>git add</code> command takes a path name for
+                    either a file or a directory; if it Is a directory, the command adds all the files in that directory
+                    recursively.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Staging_Modified_Files">
+            <header>Staging Modified Files</header>
+            <article>
+                <p>If you change an already tracked file called <code>CONTRIBUTING.md</code> and then run your
+                    <code>git status</code> command again, the CONTRIBUTING.md file appears under a section named
+                    “Changes not staged for commit” — which means that a file that is tracked has been modified in the
+                    working directory but not yet staged. To stage it, you run the <code>git add</code> command.
+                    <code>git add</code> is a multipurpose command — you use it to begin tracking new files, to stage
+                    files, and to do other things like marking merge-conflicted files as resolved. It may be helpful to
+                    think of it more as “add precisely this content to the next commit” rather than “add this file to
+                    the project”. Let’s run <code>git add</code> now to stage the CONTRIBUTING.md file, and then run
+                    <code>git status</code> again:
+                </p>
+
+                <pre>
+                <code>$ git add CONTRIBUTING.md
+                $ git status
+                On branch main
+                Your branch is up-to-date with 'origin/main'.
+                Changes to be committed:
+                  (use "git reset HEAD <file>..." to unstage)
+                    new file: README
+                      modified: CONTRIBUTING.md</code>
+                </pre>
+
+                <P>Both files are staged and will go into your next commit.</P>
+            </article>
+        </section>
+
+        <section class="main-section" id="Committing_Your_Changes">
+            <header>Committing Your Changes</header>
+            <article>
+                <p>Now that your staging area is set up the way you want it, you can commit your changes. Remember that
+                    anything that is still unstaged — any files you have created or modified that you haven’t run
+                    <code>git add</code> on since you edited them — won’t go into this commit. They will stay as
+                    modified files on your disk. In this case, let’s say that the last time you ran
+                    <code>git status</code>, you saw that everything was staged, so you’re ready to commit
+                    your changes. The simplest way to commit is to type <code>git commit</code>. Doing so launches your
+                    editor of choice where you can edit the commit message or use the default commit message provided.
+                    Alternatively, you can type your commit message inline with the commit command by specifying it
+                    after a -m flag, like this:
+                </p>
+
+                <pre>
+                <code>$ git commit -m "Story 182: fix benchmarks for speed"
+                  [main 463dc4f] Story 182: fix benchmarks for speed
+                    2 files changed, 2 insertions(+)
+                    create mode 100644 README
+                </code>
+                </pre>
+
+                <p>Now you’ve created your first commit! You can see that the commit has given you some output about
+                    itself: which branch you committed to (main), what SHA-1 checksum the commit has (463dc4f), how many
+                    files were changed, and statistics about lines added and removed in the commit. Remember that the
+                    commit records the snapshot you set up in your staging area. Anything you didn’t stage is still
+                    sitting there modified; you can do another commit to add it to your history. Every time you perform
+                    a commit, you’re recording a snapshot of your project that you can revert to or compare to later.
+                </p>
+
+            </article>
+        </section>
+
+        <section class="main-section" id="Creating_Branches">
+            <header>Creating Branches</header>
+            <article>
+                <p>When you make a commit, Git stores a commit object that contains a pointer to the snapshot of the
+                    content you staged. This object also contains the author’s name and email address, the message that
+                    you typed, and pointers to the commit or commits that directly came before this commit (its parent
+                    or parents). If you make some changes and commit again, the next commit stores a pointer to the
+                    commit that came immediately before it. A branch in Git is simply a lightweight movable pointer to
+                    one of these commits.</p>
+
+                <p>What happens when you create a new branch? Well, doing so creates a new pointer for you to move
+                    around. Let’s say you want to create a new branch called "testing". You do this
+                    with the <code>git branch</code> command:</p>
+                <pre>$ git branch testing</pre>
+                <p>This creates a new pointer to the same commit you’re currently on. How does Git know what branch
+                    you’re currently on? It keeps a special pointer called HEAD which pointsd to the local branch
+                    you’re currently on. In this case, you’re still on <code>main</code>. The git branch command only
+                    created a new branch — it didn’t switch to that branch.</p>
+                </p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Switching_Between_Branches">
+            <header>Switching Between Branches</header>
+            <article>
+                <p>To switch to an existing branch, you run the <code>git checkout</code> command. Let’s switch to the
+                    new testing branch:</p>
+                <pre>$ git checkout testing</pre>
+                <p>This moves HEAD to point to the <code>testing branch</code>. Any commits made from this point onwards
+                    will be made from the new <code>testing</code> branch.</p>
+                <p>From Git version 2.23 onwards you can use <code>git switch</code> instead of
+                    <code>git checkout</code> to:
+                </p>
+                <ul>
+                    <li>Switch to an existing branch: <code>git switch testing-branch</code>.</li>
+                    <li>Create a new branch and switch to it: <code>git switch -c new-branch</code>.
+                        The <code>-c</code> flag stands for create, you can also use the full flag:
+                        <code>--create</code>.
+                    </li>
+                    <li>Return to your previously checked out branch: <code>git switch -</code>.</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="main-section" id="Basic_Merging">
+            <header>Basic Merging</header>
+            <article>
+                <p>Let's assume that after creating the new <code>testing</code> branch, you work on your website and
+                    make some commits. Doing so moves the <code>testing</code> branch forward, because you have it
+                    checked out (that is, your <code>HEAD</code> is pointing to it). Along the line, you want to
+                    incorporate urgent fixes to the project.With Git, you don’t have to deploy your fix along with the
+                    testing changes you’ve made, and you don’t have to put a lot of effort into reverting those changes
+                    before you can work on applying your fix to what is in production. All you have to do is switch back
+                    to your main branch.</p>
+
+                <p>However, before you do that, note that if your working directory or staging area has uncommitted
+                    changes that conflict with the branch you’re checking out, Git won’t let you switch branches. It’s
+                    best to have a clean working state when you switch branches. There are ways to get around this but
+                    for now, let’s assume you’ve committed all your changes, so you can switch back to your main
+                    branch:</p>
+
+                <pre>
+                <code>$ git checkout main
+                Switched to branch 'main'
+                </code>
+                </pre>
+
+                <p>At this point, your project working directory is exactly the way it was before you started working on
+                    <code>testing</code>, and you can concentrate on your hotfix. When you switch branches, Git resets
+                    your working directory to look like it did the last time you committed on that branch. It adds,
+                    removes, and modifies files automatically to make sure your working copy is what the branch looked
+                    like on your last commit to it. Let’s create a hotfix branch on which to work until it’s completed:
+                </p>
+
+                <pre>
+                <code>$ git checkout -b hotfix
+                Switched to a new branch "hotfix"
+                </code>
+                </pre>
+
+                <p> You can make your changes, make sure the hotfix is what you want, and finally merge the hotfix
+                    branch back into your main branch to deploy to production. You do this with the
+                    <code>git merge</code> command:
+                </p>
+
+                <pre>
+                <code>$ git checkout main
+                $ git merge hotfix
+                Updating f42c576..3a0874c
+                Fast-forward
+                  index.html | 2 ++
+                  1 file changed, 2 insertions(+)
+                </code>
+                </pre>
+
+                <p>You’ll notice the phrase “fast-forward” in that merge. Because the commit pointed to by the branch
+                    <code>hotfix</code> you merged in was directly ahead of the commit you’re on, Git simply moves the
+                    pointer forward. Your change is now in the snapshot of the commit pointed to by the main branch, and
+                    you can deploy the fix. After your super-important fix is deployed, you’re ready to switch back to
+                    the work you were doing before you were interrupted. However, first you’ll delete the hotfix branch,
+                    because you no longer need it — the master branch points at the same place. You can delete it with
+                    the -d option to <code>git branch</code>:
+                </p>
+
+                <pre>
+                <code>$ git branch -d hotfix
+                Deleted branch hotfix (3a0874c).
+                </code></pre>
+
+                <p>Now you can switch back to your work-in-progress branch on <code>testing</code> and continue working
+                    on it. It’s worth noting here that the work you did in your hotfix branch is not contained in the
+                    files in your testing branch. Suppose you’ve decided that testing work is complete and ready to be
+                    merged into your main branch. In order to do that, you’ll merge your testing branch into main, much
+                    like you merged your hotfix branch earlier. All you have to do is check out the branch you wish to
+                    merge into and then run the git merge command:</p>
+
+                <pre>
+                <code>$ git checkout main
+                Switched to branch 'main'
+                $ git merge testing
+                Merge made by the 'recursive' strategy.
+                index.html | 1 +
+                1 file changed, 1 insertion(+)
+                </code>
+                </pre>
+
+                <p>This looks a bit different than the hotfix merge you did earlier. In this case, your development
+                    history has diverged from some older point. Because the commit on the branch you’re on isn’t a
+                    direct ancestor of the branch you’re merging in, Git has to do some work. In this case, Git does a
+                    simple three-way merge, using the two snapshots pointed to by the branch tips and the common
+                    ancestor of the two. Instead of just moving the branch pointer forward, Git creates a new snapshot
+                    that results from this three-way merge and automatically creates a new commit that points to it.
+                    This is referred to as a merge commit, and is special in that it has more than one parent.
+                    Now that your work is merged in, you have no further need for the testing branch. You can close the
+                    issue in your issue-tracking system, and delete the branch as shown earlier.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Adding_Remote_Respositories">
+            <header>Adding Remote Respositories</header>
+            <article>
+                <p>To be able to collaborate on any Git project, you need to know how to manage your remote
+                    repositories. Remote repositories are versions of your project that are hosted on the
+                    Internet or network somewhere. To see which remote servers you have configured, you can run
+                    the <code>git remote</code> command. It lists the shortnames of each remote handle you’ve specified.
+                    If you’ve cloned your repository, you should at least see <code>origin</code> — that is the default
+                    name Git gives to the server you cloned from.
+                </p>
+                <p>We’ve mentioned and given some demonstrations of how the <code>git clone</code> command implicitly
+                    adds the <code>origin</code> remote for you.To add a new remote Git repository as a shortname you
+                    can reference easily, run git remote add /shortname/ /url/:</p>
+
+                <pre>
+                <code>$ git remote
+                origin
+                $ git remote add pb https://github.com/paulboone/ticgit</code>
+                </pre>
+
+                <p>Now you can use the string "pb" on the command line in lieu of the whole URL. For example, if you
+                    want to fetch all the information that Paul has but that you don’t yet have in your repository, you
+                    can run git fetch pb :</p>
+
+                <pre>
+                <code>$ git fetch pb
+                remote: Counting objects: 43, done.
+                remote: Compressing objects: 100% (36/36), done.
+                remote: Total 43 (delta 10), reused 31 (delta 5)
+                Unpacking objects: 100% (43/43), done.
+                From https://github.com/paulboone/ticgit
+                * [new branch] main -> pb/main
+                * [new branch] ticgit -> pb/ticgit
+                </code>
+                </pre>
+
+                <p>Paul’s <code>main branch</code> is now accessible locally as <code>pb/origin</code>  — you can merge
+                    it into one of your branches, or you can check out a local branch at that point if you want to
+                    inspect it.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Fetching_and_Pulling_from_Remotes">
+            <header>Fetching and Pulling from Remotes</header>
+            <article>
+                <p>As you just saw, to get data from your remote projects, you can run:</p>
+                <pre>$ git fetch /remote/</pre>
+                <p>The command goes out to that remote project and pulls down all the data from that remote project that
+                    you don’t have yet. After you do this, you should have references to all the
+                    branches from that remote, which you can merge in or inspect at any time.
+                    It is important to note that the <code>git fetch</code> command only downloads the data to your
+                    local repository — it doesn’t automatically merge it with any of your work or modify what you’re
+                    currently working on. You have to merge it manually into your work when you’re ready.</p>
+                <p>If your current branch is set up to track a remote branch, you can use the <code>git pull</code>
+                    command to automatically fetch and then merge that remote branch into your current branch. This may
+                    be an easier or more comfortable workflow for you; and by default, the <code>git clone</code>
+                    command automatically sets up your local main branch to track the remote main branch (or whatever
+                    the default branch is called) on the server you cloned from. Running <code>git pull</code> generally
+                    fetches data from the server you originally cloned from and automatically tries to merge it into the
+                    code you’re currently working on.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Pushing_to_Your_Remotes">
+            <header>Pushing to Your Remotes</header>
+            <article>
+                <p>When you have your project at a point that you want to share, you have to push it upstream. The
+                    command for this is simple: <code>git push /remote/ /branch/</code>. If you want to push your maIN
+                    branch to your origin server (again, cloning generally sets up both of those names for you
+                    automatically), then you can run this to push any commits you’ve done back up to the server:</p>
+                <pre>$ git push origin main</pre>
+                <p>This command works only if you cloned from a server to which you have write access and if nobody has
+                    pushed in the meantime. If you and someone else clone at the same time and they push upstream and
+                    then you push upstream, your push will rightly be rejected. You’ll have to fetch their work first
+                    and incorporate it into yours before you’ll be allowed to push.</p>
+            </article>
+        </section>
+
+        <section class="main-section" id="Reference">
+            <header>Reference</header>
+            <article>
+                <p>All the documentation in this page is taken from the Pro Git e-book which is available for download
+                    <a href="https://git-scm.com/book/en/v2">here</a>. Highly recommended for additional reading on
+                    topics such as hosting repositories on Github, advanced commands e.g. <code>git rebase</code>,
+                    extra tools such as <code>git tag</code>, <code>git stash</code>, and how to customize and debugging
+                    with Git.
+                </p>
+            </article>
+        </section>
+    </main>
+
+    <!--Licence
+    This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+    To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0 or send a letter to 
+    Creative Commons, PO Box 1866, Mountain View, CA s94042, USA. -->
+</body>
+
+</html>
