@@ -131,7 +131,8 @@ code.inline {
   margin: 0px;
 }
 
-a:visited {
+
+a:link, a:visited {
   color: inherit;
 }
 
