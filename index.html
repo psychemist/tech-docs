@@ -139,37 +139,39 @@
 
         <section class="main-section" id="The_Three_States">
             <header>The Three States</header>
-            <article class="none">
+            <article class="shrink">
                 <p>Git has three main states that your files can reside in: modified, staged, and committed:</p>
                 <ul>
-                    <li> Modified means that you have changed the file but have not committed it to your database yet.
+                    <li>Modified means that you have changed the file but have not committed it to your
+                        database yet.
                     </li>
-                    <li>Staged means that you have marked a modified file in its current version to go into your next
-                        commit snapshot.</li>
+                    <li>Staged means that you have marked a modified file in its current version to go
+                        into your next commit snapshot.</li>
                     <li>Committed means that the data is safely stored in your local database.</li>
                 </ul>
 
                 <p> This leads us to the three main sections of a Git project: the working tree, the staging area, and
                     the Git directory.</p>
                 <ul>
-                    <li> The working tree is a single checkout of one version of the project. These files are pulled out
-                        of the compressed database in the Git directory and placed on disk for you to use or modify.
+                    <li>The working tree is a single checkout of one version of the project. These files
+                        are pulled out of the compressed database in the Git directory and placed on disk for you to use
+                        or modify.
                     </li>
-                    <li>The staging area is a file, generally contained in your Git directory, that stores information
-                        about what will go into your next commit. Its technical name in Git parlance is the “index”,
-                        but the phrase “staging area” works just as well.</li>
-                    <li>The Git directory is where Git stores the metadata and object database for your project. This is
-                        the most important part of Git, and it is what is copied when you clone a repository from
-                        another computer.</li>
+                    <li>The staging area is a file, generally contained in your Git directory, that
+                        stores information about what will go into your next commit. Its technical name in Git parlance
+                        is the “index”, but the phrase “staging area” works just as well.</li>
+                    <li>The Git directory is where Git stores the metadata and object database for your
+                        project. This is the most important part of Git, and it is what is copied when you clone a
+                        repository from another computer.</li>
                 </ul>
 
                 <p>The basic Git workflow goes something like this:</p>
                 <ul>
                     <li>You modify files in your working tree.</li>
-                    <li>You selectively stage just those changes you want to be part of your next commit, which adds
-                        only those changes to the staging area.</li>
-                    <li>You do a commit, which takes the files as they are in the staging area and stores that snapshot
-                        permanently to your Git directory.</li>
+                    <li>You selectively stage just those changes you want to be part of your next commit,
+                        which adds only those changes to the staging area.</li>
+                    <li>You do a commit, which takes the files as they are in the staging area and stores
+                        that snapshot permanently to your Git directory.</li>
                 </ul>
                 <p>If a particular version of a file is in the Git directory, it is considered committed. If it has
                     been modified and was added to the staging area, it is staged. And if it was changed since it
@@ -186,9 +188,7 @@
                         If you have a project directory that is currently not under version control and you want to
                         start controlling it with Git, you first need to go to that project’s directory in the command
                         line and type:
-
                         <code>$ git init</code>
-
                         This creates a new subdirectory named <code class="inline">.git</code> that contains all of your
                         necessary repository files — a Git repository skeleton. At this point, nothing in your project
                         is tracked yet.
@@ -204,16 +204,19 @@
 
                         <code>$ git clone https://github.com/libgit2/libgit2</code>
 
-                        That creates a directory named <code class="inline">libgit2</code>, initializes a <code
-                            class="inline">.git</code> directory inside it, pulls down all the data for that repository,
-                        and checks out a working copy of the latest version. If you go into the new <code
-                            class="inline">libgit2</code> directory that was just created, you will see the project
-                        files in there, ready to be worked on or used. <br>
+                        <p>That creates a directory named <code class="inline">libgit2</code>, initializes a <code
+                                class="inline">.git</code> directory inside it, pulls down all the data for that
+                            repository, and checks out a working copy of the latest version. If you go into the new
+                            <code class="inline">libgit2</code> directory that was just created, you will see the
+                            project files in there, ready to be worked on or used.
+                        </p>
 
-                        Git has a number of different transfer protocols you can use. The previous example uses the
-                        <code class="inline">https:// protocol</code>, but you may also see <code
-                            class="inline">git://</code> or <code class="inline">user@server:path/to/repo.git</code>,
-                        which uses the SSH transfer protocol.
+                        <p>Git has a number of different transfer protocols you can use. The previous example uses the
+                            <code class="inline">https:// protocol</code>, but you may also see <code
+                                class="inline">git://</code> or <code
+                                class="inline">user@server:path/to/repo.git</code>, which uses the SSH transfer
+                            protocol.
+                        </p>
                     </li>
                 </ol>
             </article>
@@ -371,12 +374,12 @@
                 <p>Along the line, you want to incorporate urgent fixes to the project. With Git, you do not have to
                     deploy your fix along with the testing changes you have made, and you dot nohave to put a lot of
                     effort into reverting those changes before you can work on applying your fix to what is in
-                    production. All you have to do is switch back to your main branch.</p>
+                    production. All you have to do is switch back to your <code class="inline">main</code> branch.</p>
                 <p>However, before you do that, note that if your working directory or staging area has uncommitted
                     changes that conflict with the branch you are checking out, Git will not let you switch branches.
                     It is best to have a clean working state when you switch branches. There are ways to get around this
-                    but for now, let us assume you have committed all your changes, so you can switch back to your main
-                    branch:</p>
+                    but for now, let us assume you have committed all your changes, so you can switch back to your <code
+                        class="inline">main</code> branch:</p>
 
                 <code>$ git checkout main
                 Switched to branch 'main'
@@ -386,17 +389,17 @@
                     <code class="inline">testing</code>, and you can concentrate on your hotfix. When you switch
                     branches, Git resets your working directory to look like it did the last time you committed on that
                     branch. It adds, removes, and modifies files automatically to make sure your working copy is what
-                    the branch looked like on your last commit to it. Create a hotfix branch on which to work until it
-                    is completed:
+                    the branch looked like on your last commit to it. Create a <code class="inline">hotfix</code>
+                    branch on which to work until it is completed:
                 </p>
 
                 <code>$ git checkout -b hotfix
                 Switched to a new branch "hotfix"
                 </code>
 
-                <p> You can make your changes, make sure the hotfix is exactly how you want, and finally merge the
-                    hotfix branch back into your main branch to deploy to production. You do this with the <code
-                        class="inline">git merge</code> command:
+                <p> You can make your changes, make sure the fixes are exactly how you want, and finally merge the
+                    <code class="inline">hotfix</code> branch back into your <code class="inline">main</code> branch
+                    to deploy to production. You do this with the <code class="inline">git merge</code> command:
                 </p>
 
                 <code>$ git checkout main
@@ -410,10 +413,12 @@
                 <p>You will notice the phrase “fast-forward” in that merge. Because the commit pointed to by the branch
                     <code class="inline">hotfix</code> you merged in was directly ahead of the commit you are on, Git
                     simply moves the pointer forward. Your change is now in the snapshot of the commit pointed to by the
-                    main branch, and you can deploy the fix. After your fix is deployed, you are ready to switch back to
-                    the work you were doing before you were interrupted. However, first delete the <code
-                        class="inline">hotfix</code> branch, because you no longer need it — the main branch points at
-                    the same place. You can delete it with the -d option to <code class="inline">git branch</code>:
+                    main branch, and you can deploy the fix.
+                </p>
+                <p>After your fix is deployed, you are ready to switch back to the work you were doing before you were
+                    interrupted. However, first delete the <code class="inline">hotfix</code> branch, because you no
+                    longer need it — the <code class="inline"> main</code> branch points at the same place. You can
+                    delete it with the -d option to <code class="inline">git branch</code>:
                 </p>
 
                 <code>$ git branch -d hotfix
@@ -423,12 +428,13 @@
                 <p>Now you can switch back to your work-in-progress branch on <code class="inline">testing</code> and
                     continue working on it. It is worth noting here that the work you did in your <code
                         class="inline">hotfix</code> branch is not contained in the files in your <code
-                        class="inline">testing</code> branch. Suppose you have decided that testing work is complete and
-                    ready to be merged into your main branch. In order to do that, merge your <code class="inline"></code><code class="inline"></code> testing branch into main, much
-                    like you merged your hotfix branch earlier. All you have to do is check out the branch you wish to
-                    merge into and then run the git merge command:</p>
+                        class="inline">testing</code> branch.</p>
+                <p>Suppose you have decided that the testing work is complete and ready to be merged into your <class
+                        class="inline">main</class> branch. In order to do that, merge your <code
+                        class="inline">testing</code> branch into <code class="inline">main</code>, much like you merged
+                    your <code class="inline">hotfix</code> branch earlier. All you have to do is check out the branch
+                    you wish to merge into and then run the <code class="inline">git merge</code> command:</p>
 
-                <pre>
                 <code>$ git checkout main
                 Switched to branch 'main'
                 $ git merge testing
@@ -436,17 +442,18 @@
                 index.html | 1 +
                 1 file changed, 1 insertion(+)
                 </code>
-                </pre>
 
-                <p>This looks a bit different than the hotfix merge you did earlier. In this case, your development
-                    history has diverged from some older point. Because the commit on the branch you’re on isn’t a
-                    direct ancestor of the branch you’re merging in, Git has to do some work. In this case, Git does a
-                    simple three-way merge, using the two snapshots pointed to by the branch tips and the common
-                    ancestor of the two. Instead of just moving the branch pointer forward, Git creates a new snapshot
-                    that results from this three-way merge and automatically creates a new commit that points to it.
-                    This is referred to as a merge commit, and is special in that it has more than one parent.
-                    Now that your work is merged in, you have no further need for the testing branch. You can close the
-                    issue in your issue-tracking system, and delete the branch as shown earlier.</p>
+                <p>This looks a bit different than the <code class="inline">hotfix</code> merge you did earlier. In this
+                    case, your development history has diverged from some older point. Because the commit on the branch
+                    you are on is not a direct ancestor of the branch you are merging in, Git has to do some work. In
+                    this case, Git does a simple three-way merge, using the two snapshots pointed to by the branch tips
+                    and the common ancestor of the two.
+                </p>
+                <p>Instead of just moving the branch pointer forward, Git creates a new snapshot that results from this
+                    three-way merge and automatically creates a new commit that points to it. This is referred to as a
+                    merge commit, and is special in that it has more than one parent. Now that your work is merged in,
+                    you have no further need for the <code class="inline">testing</code> branch. You can close the issue
+                    in your issue-tracking system, and delete the branch as shown earlier.</p>
             </article>
         </section>
 
@@ -454,41 +461,38 @@
             <header>Adding Remote Respositories</header>
             <article>
                 <p>To be able to collaborate on any Git project, you need to know how to manage your remote
-                    repositories. Remote repositories are versions of your project that are hosted on the
-                    Internet or network somewhere. To see which remote servers you have configured, you can run
-                    the <code>git remote</code> command. It lists the shortnames of each remote handle you’ve specified.
-                    If you’ve cloned your repository, you should at least see <code>origin</code> — that is the default
-                    name Git gives to the server you cloned from.
+                    repositories. Remote repositories are versions of your project that are hosted on the Internet or
+                    a network somewhere. To see which remote servers you have configured, you can run the
+                    <code class="inline">git remote</code> command. It lists the shortnames of each remote handle you
+                    have specified.
                 </p>
-                <p>We’ve mentioned and given some demonstrations of how the <code>git clone</code> command implicitly
-                    adds the <code>origin</code> remote for you.To add a new remote Git repository as a shortname you
-                    can reference easily, run git remote add /shortname/ /url/:</p>
+                <p>If you have cloned your repository, you should at least see <code class="inline">origin</code> — that
+                    is the default name Git gives to the server you cloned from. We have given some demonstrations of
+                    how the <code class="inline">git clone</code> command implicitly adds the <code
+                        class="inline">origin</code> remote for you. To add a new remote Git repository as a shortname
+                    you can reference easily, run <code class="inline">git remote add /shortname/ /url/:</code></p>
 
-                <pre>
                 <code>$ git remote
                 origin
-                $ git remote add pb https://github.com/paulboone/ticgit</code>
-                </pre>
+                $ git remote add doc https://github.com/110nard0/tech-docs.git</code>
 
-                <p>Now you can use the string "pb" on the command line in lieu of the whole URL. For example, if you
-                    want to fetch all the information that Paul has but that you don’t yet have in your repository, you
-                    can run git fetch pb :</p>
+                <p>Now you can use the string "doc" on the command line in lieu of the whole URL. For example, if you
+                    want to fetch all the information about this page from Github, you can run <code
+                        class="inline">git fetch doc</code>:</p>
 
-                <pre>
-                <code>$ git fetch pb
+                <code>$ git fetch doc
                 remote: Counting objects: 43, done.
                 remote: Compressing objects: 100% (36/36), done.
                 remote: Total 43 (delta 10), reused 31 (delta 5)
                 Unpacking objects: 100% (43/43), done.
-                From https://github.com/paulboone/ticgit
-                * [new branch] main -> pb/main
-                * [new branch] ticgit -> pb/ticgit
+                From https://github.com/110nard0/tech-docs.git
+                * [new branch] main -> doc/main
+                * [new branch] ticgit -> doc/tech-docs.git
                 </code>
-                </pre>
 
-                <p>Paul’s <code>main branch</code> is now accessible locally as <code>pb/origin</code>  — you can merge
-                    it into one of your branches, or you can check out a local branch at that point if you want to
-                    inspect it.</p>
+                <p>My <code class="inline">main</code> branch is now accessible locally as <code
+                        class="inline">doc/origin</code>  — you can merge it into one of your branches, or you can check
+                    out a local branch at that point if you want to inspect it.</p>
             </article>
         </section>
 
@@ -496,20 +500,22 @@
             <header>Fetching and Pulling from Remotes</header>
             <article>
                 <p>As you just saw, to get data from your remote projects, you can run:</p>
-                <pre>$ git fetch /remote/</pre>
+                <code>$ git fetch /remote/</code>
                 <p>The command goes out to that remote project and pulls down all the data from that remote project that
-                    you don’t have yet. After you do this, you should have references to all the
-                    branches from that remote, which you can merge in or inspect at any time.
-                    It is important to note that the <code>git fetch</code> command only downloads the data to your
-                    local repository — it doesn’t automatically merge it with any of your work or modify what you’re
-                    currently working on. You have to merge it manually into your work when you’re ready.</p>
-                <p>If your current branch is set up to track a remote branch, you can use the <code>git pull</code>
-                    command to automatically fetch and then merge that remote branch into your current branch. This may
-                    be an easier or more comfortable workflow for you; and by default, the <code>git clone</code>
-                    command automatically sets up your local main branch to track the remote main branch (or whatever
-                    the default branch is called) on the server you cloned from. Running <code>git pull</code> generally
-                    fetches data from the server you originally cloned from and automatically tries to merge it into the
-                    code you’re currently working on.</p>
+                    you do not have yet. After you do this, you should have references to all the branches from that
+                    remote, which you can merge in or inspect at any time. Note that the <code
+                        class="inline">git fetch</code> command only downloads the data to your local repository — it
+                    does not automatically merge it with any of your work or modify what you are currently working on.
+                    You have to merge it manually into your work when you are ready.</p>
+                <p>If your current branch is set up to track a remote branch, you can use the <code
+                        class="inline">git pull</code> command to automatically fetch and then merge that remote branch
+                    into your current branch. This may be an easier or more comfortable workflow for you; and by
+                    default, the <code class="inline">git clone</code> command automatically sets up your local <code
+                        class="inline">main</code> branch to track the remote <code class="inline">main</code> branch
+                    (or whatever the default branch is called) on the server you cloned from. Running
+                    <code class="inline">git pull</code> generally fetches data from the server you originally cloned
+                    from and automatically tries to merge it into the code you are currently working on.
+                </p>
             </article>
         </section>
 
@@ -517,14 +523,15 @@
             <header>Pushing to Your Remotes</header>
             <article>
                 <p>When you have your project at a point that you want to share, you have to push it upstream. The
-                    command for this is simple: <code>git push /remote/ /branch/</code>. If you want to push your maIN
-                    branch to your origin server (again, cloning generally sets up both of those names for you
-                    automatically), then you can run this to push any commits you’ve done back up to the server:</p>
-                <pre>$ git push origin main</pre>
+                    command for this is simple: <code class="inline">git push /remote/ /branch/</code>. If you want to
+                    push your <code class="inline">main</code> branch to your <code class="inline">origin</code> server
+                    (again, cloning generally sets up both of those names for you automatically), then you can run this
+                    to push any commits you have done back up to the server:</p>
+                <code>$ git push origin main</code>
                 <p>This command works only if you cloned from a server to which you have write access and if nobody has
                     pushed in the meantime. If you and someone else clone at the same time and they push upstream and
-                    then you push upstream, your push will rightly be rejected. You’ll have to fetch their work first
-                    and incorporate it into yours before you’ll be allowed to push.</p>
+                    then you push upstream, your push will rightly be rejected. You will have to fetch their work first
+                    and incorporate it into yours before you woild be allowed to push.</p>
             </article>
         </section>
 
@@ -532,9 +539,10 @@
             <header>Reference</header>
             <article>
                 <p>All the documentation in this page is taken from the Pro Git e-book which is available for download
-                    <a href="https://git-scm.com/book/en/v2">here</a>. Highly recommended for additional reading on
-                    topics such as hosting repositories on Github, advanced commands e.g. <code>git rebase</code>,
-                    and extra tools such as tagging, customizing and debugging with Git.
+                    <a href="https://git-scm.com/book/en/v2">here</a>.
+                    Recommended for additional reading on topics such as hosting repositories on Github, advanced
+                    commands e.g. <code class="inline">git rebase</code>, and extra tools such as tagging, customizing
+                    and debugging with Git.
                 </p>
             </article>
         </section>

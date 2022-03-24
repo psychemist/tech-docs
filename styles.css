@@ -11,7 +11,6 @@ body {
   background-color: #fffef8;
   font-family: 'Open Sans', Arial, sans-serif;
   line-height: 1.6;
-  border: 1px solid red
 }
 
 #navbar {
@@ -28,6 +27,7 @@ body {
 header {
   color: black;
   margin: 10px;
+  
   text-align: center;
   font-size: 1.5em;
   font-weight: 500;
@@ -73,9 +73,6 @@ header h1 {
   text-align: justify;
 }
 
-p + p {
-  margin-bottom: ;
-}
 
 section article {
   color: #4d4e53;
@@ -87,12 +84,26 @@ section li {
   margin: 15px 0px 0px 20px;
 }
 
-li p {
-    margin: 0;
+article>p {
+  margin-bottom: 5px;
 }
 
-.none li {
-    list-style-type: none;
+li p {
+  margin: 0;
+  margin-bottom: 5px;
+}
+
+.shrink p {
+  margin-top: 5px;
+}
+
+.shrink li {
+  list-style-type: none;
+  margin-top: 10px;
+}
+
+li.square {
+    list-style-type: square;
 }
 
 code {
@@ -120,8 +131,8 @@ code.inline {
   margin: 0px;
 }
 
-li.square {
-    list-style-type: square;
+a:visited {
+  color: inherit;
 }
 
 @media only screen and (max-width: 815px) {
