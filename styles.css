@@ -1,29 +1,22 @@
-
-header {
-    font-weight: 700;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-
-li p {
-    margin: 0;
-}
-
-.none ul {
-    list-style-type: none;
-}
-
 
 html,
 body {
-  min-width: 290px;
-  color: #4d4e3;
-  background-color: #ffffff;
+  min-width: 300px;
+  color: #4d4e53;
+  background-color: #fffef8;
   font-family: 'Open Sans', Arial, sans-serif;
-  line-height: 1.5;
+  line-height: 1.6;
+  border: 1px solid red
 }
 
 #navbar {
   position: fixed;
-  min-width: 290px;
+  min-width: 30px;
   top: 0px;
   left: 0px;
   width: 300px;
@@ -36,12 +29,12 @@ header {
   color: black;
   margin: 10px;
   text-align: center;
-  font-size: 1.8em;
-  font-weight: thin;
+  font-size: 1.5em;
+  font-weight: 500;
 }
 
 header h1 {
-  font-size: 1em;
+  font-size: 1.2em;
 }
 
 #main-doc header {
@@ -77,6 +70,11 @@ header h1 {
   margin-left: 310px;
   padding: 20px;
   margin-bottom: 110px;
+  text-align: justify;
+}
+
+p + p {
+  margin-bottom: ;
 }
 
 section article {
@@ -89,6 +87,14 @@ section li {
   margin: 15px 0px 0px 20px;
 }
 
+li p {
+    margin: 0;
+}
+
+.none li {
+    list-style-type: none;
+}
+
 code {
   display: block;
   text-align: left;
@@ -98,9 +104,24 @@ code {
   word-wrap: normal;
   line-height: 2;
   background-color: #f7f7f7;
+  color: #1f681f;
   padding: 15px;
   margin: 10px;
   border-radius: 5px;
+}
+
+code.inline {
+  display: inline;
+  text-align: center;
+  position: static;
+  line-height: 1.6;
+  background-color: inherit;
+  padding: 0px;
+  margin: 0px;
+}
+
+li.square {
+    list-style-type: square;
 }
 
 @media only screen and (max-width: 815px) {
@@ -111,13 +132,14 @@ code {
   }
 
   #navbar {
-    background-color: white;
+    background-color: #fffef8;
     position: absolute;
     top: 0;
     padding: 0;
     margin: 0;
-    width: 100%;
-    max-height: 275px;
+    margin-left: 9.5px;
+    width: 98%;
+    max-height: 273px;
     border: none;
     z-index: 1;
     border-bottom: 2px solid;
@@ -135,12 +157,32 @@ code {
     margin-left: -10px;
   }
 
+#navbar {
+    background-color: #fffef8;
+    position: absolute;
+    top: 0;
+    padding: 0;
+    margin: 0;
+    margin-left: 9.5px;
+    width: 95%;
+    max-height: 273px;
+    border: none;
+    z-index: 1;
+    border-bottom: 2px solid;
+  }
+  
   code {
-    margin-left: -20px;
+    margin-left: -5px;
     width: 100%;
-    padding: 15px;
+    padding: 10px;
     padding-left: 10px;
     padding-right: 45px;
     min-width: 233px;
+  }
+}
+
+@media only screen and (min-width: 815px) {
+  #main-doc {
+    margin-right: 5px;
   }
 }
