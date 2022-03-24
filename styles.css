@@ -73,7 +73,6 @@ header h1 {
   text-align: justify;
 }
 
-
 section article {
   color: #4d4e53;
   margin: 15px;
@@ -130,7 +129,6 @@ code.inline {
   padding: 0px;
   margin: 0px;
 }
-
 
 a:link, a:visited {
   color: inherit;
